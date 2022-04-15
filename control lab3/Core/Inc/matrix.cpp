@@ -168,6 +168,10 @@ float matrix::det() {
 	return det_val;
 
 }
+matrix matrix::gain(){
+	matrix result;
+
+}
 matrix matrix::inv() {
 	float det = matrix::det();
 	matrix result(3, 3);

@@ -21,7 +21,7 @@ public:
 	void setx(int x);
 	void sety(int y);
 	void transpose();
-	void gain(float in);
+	matrix gain(float in);
 	float det();
 	matrix inv();
 	matrix plus(matrix &m);

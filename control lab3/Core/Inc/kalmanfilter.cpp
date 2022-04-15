@@ -13,6 +13,7 @@ kalman_filter::kalman_filter() {
 
 }
 void kalman_filter::kalman_gain(){
-gain_k=(p_k * C.transpose())*((C*P_k_old))
+	matrix buf=(C*P_k_old)*C.transpose();
+gain_k=(p_k * C.transpose())*(buf+R)
 }
 
