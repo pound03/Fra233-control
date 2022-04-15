@@ -12,7 +12,7 @@ class matrix {
 public:
 	int d_x;
 	int d_y;
-	float **data;
+	float data[5][5];
 	matrix();
 	matrix(int x, int y);
 	matrix(int x, int y,float *data_in);

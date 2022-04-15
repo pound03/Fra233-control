@@ -56,7 +56,7 @@ static void MX_USART2_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 float data[4]={1,2,3,4};
-matrix test1(2,2);
+matrix test1(2,2,data);
 matrix test2(2,2);
 matrix test3;
 /* USER CODE END 0 */
