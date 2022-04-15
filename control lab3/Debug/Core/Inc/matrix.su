@@ -1,0 +1,9 @@
+matrix.cpp:10:1:matrix::matrix()	32	static
+matrix.cpp:20:1:matrix::matrix(int, int)	40	static
+matrix.cpp:30:1:matrix::matrix(int, int, float*)	40	static
+matrix.cpp:54:8:matrix matrix::plus(matrix&)	40	static
+matrix.cpp:70:8:matrix matrix::operator+(matrix&)	40	static
+matrix.cpp:87:8:matrix matrix::operator-(matrix&)	40	static
+matrix.cpp:104:8:matrix matrix::operator*(matrix&)	40	static
+matrix.cpp:124:6:void matrix::setx(int)	16	static
+matrix.cpp:127:6:void matrix::sety(int)	16	static
