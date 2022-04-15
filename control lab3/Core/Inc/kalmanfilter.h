@@ -23,9 +23,9 @@ public:
 	void doCorrect_p();
 	void doPredict_y();
 	void doCorrect();
-	void doPredict();
 	void doPredict_x();
 	void doPredict_p();
+	void doResult();
 	void run(matrix u,matrix y);
 	void setAtoD(matrix a_in,matrix b_in,matrix c_in,matrix d_in);
 	void setQGR(matrix q_in,matrix g_in,matrix r_in);

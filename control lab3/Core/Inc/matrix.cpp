@@ -14,10 +14,9 @@ matrix::matrix() {
 		for (int j = 0; j < 1; ++j) {
 			data[i][j] = 0.0;
 		}
-
 	};
-
 }
+
 matrix::matrix(int x, int y) {
 	d_x = x;
 	d_y = y;
@@ -25,9 +24,7 @@ matrix::matrix(int x, int y) {
 		for (int j = 0; j < y; ++j) {
 			data[i][j] = 0.0;
 		}
-
 	};
-	//cout << "con_xy";
 }
 matrix::matrix(int x, int y, float *data_in) {
 	d_x = x;
@@ -38,33 +35,8 @@ matrix::matrix(int x, int y, float *data_in) {
 		}
 
 	};
-	//cout << "con_xy";
 }
-/*
- matrix::~matrix(){
- for (int i = 0; i < d_x; i++)
- {
- delete data[i];
- };
- delete [] data;
- }
- */
-matrix matrix::plus(matrix &m) {
-	matrix result;
-	result.setx(d_y);
-	result.sety(d_x);
 
-	for (int y = 0; y < d_y; y++) {
-		for (int x = 0; x < d_x; x++) {
-			int total = 0;
-			total = data[x][y] + m.data[x][y];
-
-			result.data[x][y] = total;
-			// printf(" = %d\n",total);
-		}
-	}
-	return result;
-}
 matrix matrix::operator+(matrix &in) {
 	matrix result;
 	result.setx(d_y);
@@ -103,7 +75,6 @@ matrix matrix::operator*(matrix &in) {
 	matrix result;
 	result.setx(d_x);
 	result.sety(in.d_y);
-
 	for (int m = 0; m < d_x; m++) {
 		for (int n = 0; n < in.d_y; n++) {
 			int total = 0;
@@ -115,17 +86,17 @@ matrix matrix::operator*(matrix &in) {
 	}
 	return result;
 }
+
+/*
 matrix matrix::operator/(matrix &in) {
 	matrix result;
 	result.setx(d_x);
 	result.sety(d_y);
-	result.data=data;
 	//result = this->matrix*in.inv();
 
 	return result;
 }
-
-//matrix matrix::operator/(matrix &m)
+*/
 
 void matrix::setx(int x) {
 	d_x = x;
@@ -149,7 +120,6 @@ matrix matrix::transpose() {
 			result.data[j][i] = data[i][j];
 		}
 	}
-
 	return result;
 }
 float matrix::det() {
@@ -180,7 +150,6 @@ matrix matrix::gain(float in){
 		}
 	}
 	return result;
-
 }
 matrix matrix::inv() {
 	float det = matrix::det();

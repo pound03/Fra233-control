@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "matrix.h"
+#include "kalmanfilter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,7 +65,7 @@ matrix test1(3,3);
 matrix test2(2,1);
 
 matrix test3;
-kalman_filter my_o
+kalman_filter Kla;
 /* USER CODE END 0 */
 
 /**

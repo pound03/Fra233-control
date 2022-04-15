@@ -8,12 +8,12 @@
 #include <kalmanfilter.h>
 
 kalman_filter::kalman_filter() {
-	static matrix buf1(3, 1);
+	matrix buf1(3, 1);
 	predictX_old = buf1;
-	static matrix buf2(3, 3);
+	matrix buf2(3, 3);
 	P_old = buf2;
-	float buf_val = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
-	static matrix buf3(3, 3, buf_val);
+	float buf_val[9] = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+	matrix buf3(3, 3, buf_val);
 	I33=buf3;
 }
 
@@ -34,8 +34,39 @@ void kalman_filter::run(matrix u_in, matrix y_in) {
 	// Correct
 	doPredict_x();
 	doPredict_p();
+	doResult();
 	// Predict
 	predictX_old = predictX_new;
 	P_old = P_new;
 	//update
+}
+
+void kalman_filter::doKalman_gain(){
+	matrix buf=((C*P_old*C.transpose())+R);
+	gainK = (P_old*C.transpose())*buf.inv();
+}
+
+void kalman_filter::doPredict_y(){
+	errorY = Y-((C*predictX_old)+(D*U));
+}
+
+void kalman_filter::doCorrect_p(){
+	P_old = (I33-(gainK*C))*P_old;
+}
+
+void kalman_filter::doCorrect(){
+	predictX = (gainK*errorY)+predictX_old;
+}
+
+void kalman_filter::doPredict_x(){
+	predictX_new = (A*predictX)+(B*U);
+}
+
+void kalman_filter::doPredict_p(){
+	P_new = ((A*P)*A.transpose())+((G*Q)*G.transpose());
+}
+
+void kalman_filter::doResult(){
+	resultY = (C*predictX)+(D*U);
+	resultX = predictX;
 }

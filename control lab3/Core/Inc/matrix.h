@@ -24,12 +24,11 @@ public:
 	matrix gain(float in);
 	float det();
 	matrix inv();
-	matrix plus(matrix &m);
-	matrix operator+(matrix &in);
 
+	matrix operator+(matrix &in);
 	matrix operator-(matrix &in);
 	matrix operator*(matrix &in);
-	matrix operator/(matrix &in);
+//	matrix operator/(matrix &in);
 };
 
 #endif /* INC_MATRIX_H_ */
