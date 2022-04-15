@@ -1,3 +1,0 @@
-matrix.cpp:10:1:matrix::matrix()	16	static
-matrix.cpp:15:1:matrix::~matrix()	16	static
-matrix.cpp:15:1:virtual matrix::~matrix()	16	static

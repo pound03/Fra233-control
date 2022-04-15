@@ -12,19 +12,24 @@ class matrix {
 public:
 	int d_x;
 	int d_y;
-	float data[5][5];
+	float data[3][3];
 	matrix();
 	matrix(int x, int y);
 	matrix(int x, int y,float *data_in);
 //	virtual ~matrix();
+	void read(float *data_in);
 	void setx(int x);
 	void sety(int y);
+	void transpose();
+	void gain(float in);
+	float det();
+	matrix inv();
 	matrix plus(matrix &m);
-	matrix operator+(matrix &m);
+	matrix operator+(matrix &in);
 
-	matrix operator-(matrix &m);
-	matrix operator*(matrix &m);
-	matrix operator/(matrix &m);
+	matrix operator-(matrix &in);
+	matrix operator*(matrix &in);
+	matrix operator/(matrix &in);
 };
 
 #endif /* INC_MATRIX_H_ */
