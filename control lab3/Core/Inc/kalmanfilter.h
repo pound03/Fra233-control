@@ -12,17 +12,23 @@
 class kalman_filter {
 public:
 	matrix A,B,C,D,R,G,Q;
+	matrix gainK,errorY,U,Y,I33;
+	matrix P,P_old,P_new;
+	matrix predictX,predictX_old,predictX_new;
+	matrix resultX,resultY;
+
 
 	kalman_filter();
-	void kalman_gain();
-	void correct_p();
-	void predict_y();
-	void correct();
-	void predict();
-	void predict_x();
-	void predict_p();
+	void doKalman_gain();
+	void doCorrect_p();
+	void doPredict_y();
+	void doCorrect();
+	void doPredict();
+	void doPredict_x();
+	void doPredict_p();
 	void run(matrix u,matrix y);
-
+	void setAtoD(matrix a_in,matrix b_in,matrix c_in,matrix d_in);
+	void setQGR(matrix q_in,matrix g_in,matrix r_in);
 };
 
 #endif /* INC_KALMANFILTER_H_ */

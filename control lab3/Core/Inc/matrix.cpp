@@ -12,7 +12,7 @@ matrix::matrix() {
 	d_y = 1;
 	for (int i = 0; i < 1; i++) {
 		for (int j = 0; j < 1; ++j) {
-			data[i][j] = 0.2;
+			data[i][j] = 0.0;
 		}
 
 	};
@@ -23,7 +23,7 @@ matrix::matrix(int x, int y) {
 	d_y = y;
 	for (int i = 0; i < x; i++) {
 		for (int j = 0; j < y; ++j) {
-			data[i][j] = 0.2;
+			data[i][j] = 0.0;
 		}
 
 	};
@@ -119,6 +119,7 @@ matrix matrix::operator/(matrix &in) {
 	matrix result;
 	result.setx(d_x);
 	result.sety(d_y);
+	result.data=data;
 	//result = this->matrix*in.inv();
 
 	return result;
@@ -139,16 +140,17 @@ void matrix::read(float *data_in) {
 		}
 	};
 }
-void matrix::transpose() {
+matrix matrix::transpose() {
+	matrix result;
+	result.setx(d_y);
+	result.sety(d_x);
 	for (int i = 0; i < d_x; i++) {
 		for (int j = 0; j < d_y; ++j) {
-			data[j][i] = data[i][j];
+			result.data[j][i] = data[i][j];
 		}
 	}
-	;
-	int buf = d_x;
-	d_x = d_y;
-	d_y = buf;
+
+	return result;
 }
 float matrix::det() {
 	float det_val = 0;
@@ -168,8 +170,16 @@ float matrix::det() {
 	return det_val;
 
 }
-matrix matrix::gain(){
+matrix matrix::gain(float in){
 	matrix result;
+	result.setx(d_x);
+	result.sety(d_y);
+	for (int m = 0; m < d_x; m++) {
+		for (int n = 0; n < d_y; n++) {
+			result.data[m][n] = data[m][n]*in;
+		}
+	}
+	return result;
 
 }
 matrix matrix::inv() {

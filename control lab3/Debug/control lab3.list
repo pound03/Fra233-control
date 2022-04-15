@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000d97f  00000000  00000000  0002003c  2**0
+ 12 .debug_info   0000da3a  00000000  00000000  0002003c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001bdd  00000000  00000000  0002d9bb  2**0
+ 13 .debug_abbrev 00001bdd  00000000  00000000  0002da76  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000c10  00000000  00000000  0002f598  2**3
+ 14 .debug_aranges 00000c18  00000000  00000000  0002f658  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000b78  00000000  00000000  000301a8  2**3
+ 15 .debug_ranges 00000b80  00000000  00000000  00030270  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001677d  00000000  00000000  00030d20  2**0
+ 16 .debug_macro  0001677d  00000000  00000000  00030df0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000cc25  00000000  00000000  0004749d  2**0
+ 17 .debug_line   0000cc89  00000000  00000000  0004756d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008a637  00000000  00000000  000540c2  2**0
+ 18 .debug_str    0008a64e  00000000  00000000  000541f6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000de6f9  2**0
+ 19 .comment      00000053  00000000  00000000  000de844  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000032f8  00000000  00000000  000de74c  2**2
+ 20 .debug_frame  0000331c  00000000  00000000  000de898  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -717,6 +717,11 @@ float matrix::det() {
  8000750:	55555556 	.word	0x55555556
 
 08000754 <_ZN6matrix3invEv>:
+		}
+	}
+	return result;
+
+}
 matrix matrix::inv() {
  8000754:	b580      	push	{r7, lr}
  8000756:	b086      	sub	sp, #24

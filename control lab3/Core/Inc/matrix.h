@@ -20,7 +20,7 @@ public:
 	void read(float *data_in);
 	void setx(int x);
 	void sety(int y);
-	void transpose();
+	matrix transpose();
 	matrix gain(float in);
 	float det();
 	matrix inv();

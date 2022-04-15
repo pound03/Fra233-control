@@ -64,7 +64,7 @@ matrix test1(3,3);
 matrix test2(2,1);
 
 matrix test3;
-
+kalman_filter my_o
 /* USER CODE END 0 */
 
 /**
