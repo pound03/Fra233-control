@@ -9,6 +9,7 @@
 #define INC_KALMANFILTER_H_
 
 #include "matrix.h"
+
 class kalman_filter {
 public:
 	matrix A,B,C,D,R,G,Q;
