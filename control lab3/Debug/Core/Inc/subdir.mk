@@ -5,15 +5,12 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Core/Inc/kalmanfilter.cpp \
 ../Core/Inc/matrix.cpp 
 
 OBJS += \
-./Core/Inc/kalmanfilter.o \
 ./Core/Inc/matrix.o 
 
 CPP_DEPS += \
-./Core/Inc/kalmanfilter.d \
 ./Core/Inc/matrix.d 
 
 
@@ -24,7 +21,7 @@ Core/Inc/%.o: ../Core/Inc/%.cpp Core/Inc/subdir.mk
 clean: clean-Core-2f-Inc
 
 clean-Core-2f-Inc:
-	-$(RM) ./Core/Inc/kalmanfilter.d ./Core/Inc/kalmanfilter.o ./Core/Inc/matrix.d ./Core/Inc/matrix.o
+	-$(RM) ./Core/Inc/matrix.d ./Core/Inc/matrix.o
 
 .PHONY: clean-Core-2f-Inc
 

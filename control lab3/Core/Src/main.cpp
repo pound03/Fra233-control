@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "matrix.h"
-#include "kalmanfilter.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,11 +61,15 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-matrix test1(3,3);
-matrix test2(2,1);
-
-matrix test3;
-kalman_filter Kla;
+matrix A(3,3);
+matrix B(3,3);
+matrix C(3,1);
+matrix D(1,1);
+matrix R(1,1);
+matrix G(1,3);
+matrix Q(1,1);
+matrix y(1,1);
+matrix u(1,1);
 /* USER CODE END 0 */
 
 /**
@@ -75,13 +79,30 @@ kalman_filter Kla;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	float data[9]={1,2,3,4,5,6,1,0,1};
 
-	float data2[4]={3,4};
-	test1.read(data);
-	test2.read(data2);
+	float dt = 0.0001;
+	float data_A[9] = {1,dt,dt*dt/2,0,1,dt,0,0,1};
+	float data_B[3] = {0,0,0};
+	float data_C[3] = {1,0,0};
+	float data_R[1] = {0.001};
+	float buf_g=(dt*dt)/2;
+	float data_G[3] = {buf_g,dt,1.0};
+	float data_Q[1] = {0.001};
+	float data_D[1] = {0};
 
-	test3=test1.inv();
+	float data_y[1] = {0.001};
+	float data_u[1] = {0};
+
+	A.read(data_A);
+	B.read(data_B);
+	C.read(data_C);
+	D.read(data_D);
+
+	G.read(data_G);
+	Q.read(data_Q);
+	R.read(data_R);
+	u.read(data_u);
+	y.read(data_y);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -113,7 +134,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

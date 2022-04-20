@@ -1,15 +1,13 @@
 matrix.cpp:10:1:matrix::matrix()	24	static
-matrix.cpp:21:1:matrix::matrix(int, int)	32	static
-matrix.cpp:32:1:matrix::matrix(int, int, float*)	32	static
-matrix.cpp:52:8:matrix matrix::plus(matrix&)	40	static
-matrix.cpp:68:8:matrix matrix::operator+(matrix&)	40	static
-matrix.cpp:85:8:matrix matrix::operator-(matrix&)	40	static
-matrix.cpp:102:8:matrix matrix::operator*(matrix&)	40	static
-matrix.cpp:118:8:matrix matrix::operator/(matrix&)	24	static
-matrix.cpp:129:6:void matrix::setx(int)	16	static
-matrix.cpp:132:6:void matrix::sety(int)	16	static
-matrix.cpp:135:6:void matrix::read(float*)	24	static
-matrix.cpp:142:8:matrix matrix::transpose()	24	static
-matrix.cpp:153:7:float matrix::det()	24	static
-matrix.cpp:171:8:matrix matrix::gain(float)	32	static
-matrix.cpp:183:8:matrix matrix::inv()	32	static
+matrix.cpp:20:1:matrix::matrix(int, int)	32	static
+matrix.cpp:29:1:matrix::matrix(int, int, float*)	32	static
+matrix.cpp:40:8:matrix matrix::operator+(matrix&)	40	static
+matrix.cpp:57:8:matrix matrix::operator-(matrix&)	40	static
+matrix.cpp:74:8:matrix matrix::operator*(matrix&)	40	static
+matrix.cpp:101:6:void matrix::setx(int)	16	static
+matrix.cpp:104:6:void matrix::sety(int)	16	static
+matrix.cpp:107:6:void matrix::read(float*)	24	static
+matrix.cpp:114:8:matrix matrix::transpose()	24	static
+matrix.cpp:125:7:float matrix::det()	24	static
+matrix.cpp:143:8:matrix matrix::gain(float)	32	static
+matrix.cpp:154:8:matrix matrix::inv()	32	static
