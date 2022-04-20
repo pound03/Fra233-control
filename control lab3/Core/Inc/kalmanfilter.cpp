@@ -42,31 +42,32 @@ void kalman_filter::run(matrix u_in, matrix y_in) {
 }
 
 void kalman_filter::doKalman_gain(){
-	matrix buf=((C*P_old*C.transpose())+R);
-	gainK = (P_old*C.transpose())*buf.inv();
+
+//matrix buf=((C*P_old*C.transpose())+R);
+//gainK = (P_old*C.transpose())*buf.inv();
 }
 
 void kalman_filter::doPredict_y(){
-	errorY = Y-((C*predictX_old)+(D*U));
+//errorY = Y-((C*predictX_old)+(D*U));
 }
 
 void kalman_filter::doCorrect_p(){
-	P_old = (I33-(gainK*C))*P_old;
+//P_old = (I33-(gainK*C))*P_old;
 }
 
 void kalman_filter::doCorrect(){
-	predictX = (gainK*errorY)+predictX_old;
+//predictX = (gainK*errorY)+predictX_old;
 }
 
 void kalman_filter::doPredict_x(){
-	predictX_new = (A*predictX)+(B*U);
+//predictX_new = (A*predictX)+(B*U);
 }
 
 void kalman_filter::doPredict_p(){
-	P_new = ((A*P)*A.transpose())+((G*Q)*G.transpose());
+//P_new = ((A*P)*A.transpose())+((G*Q)*G.transpose());
 }
 
 void kalman_filter::doResult(){
-	resultY = (C*predictX)+(D*U);
-	resultX = predictX;
+//resultY = (C*predictX)+(D*U);
+//resultX = predictX;
 }

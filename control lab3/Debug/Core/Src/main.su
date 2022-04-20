@@ -1,10 +1,9 @@
-main.cpp:93:5:int main()	112	static
-main.cpp:164:6:void SystemClock_Config()	88	static
-main.cpp:209:13:void MX_TIM1_Init()	56	static
-main.cpp:259:13:void MX_TIM2_Init()	32	static
-main.cpp:304:13:void MX_USART2_UART_Init()	8	static
-main.cpp:337:13:void MX_GPIO_Init()	48	static
-main.cpp:372:6:void doKalman_gain()	144	static
-main.cpp:430:6:void Error_Handler()	4	static,ignoring_inline_asm
-main.cpp:439:1:void __static_initialization_and_destruction_0(int, int)	16	static
-main.cpp:439:1:cpp)	8	static
+main.cpp:84:5:int main()	1176	static
+main.cpp:158:6:void SystemClock_Config()	88	static
+main.cpp:203:13:void MX_TIM1_Init()	56	static
+main.cpp:253:13:void MX_TIM2_Init()	32	static
+main.cpp:298:13:void MX_USART2_UART_Init()	8	static
+main.cpp:331:13:void MX_GPIO_Init()	48	static
+main.cpp:373:6:void Error_Handler()	4	static,ignoring_inline_asm
+main.cpp:382:1:void __static_initialization_and_destruction_0(int, int)	16	static
+main.cpp:382:1:cpp)	8	static

@@ -1,3 +1,4 @@
+"./Core/Inc/kalmanfilter.o"
 "./Core/Inc/matrix.o"
 "./Core/Src/cpp_main.o"
 "./Core/Src/main.o"
