@@ -22,7 +22,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "matrix.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,6 +56,16 @@ static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
+void doKalman_gain();
+void doCorrect_p();
+void doPredict_y();
+void doCorrect();
+void doPredict_x();
+void doPredict_p();
+void doResult();
+void run(matrix u,matrix y);
+void setAtoD(matrix a_in,matrix b_in,matrix c_in,matrix d_in);
+void setQGR(matrix q_in,matrix g_in,matrix r_in);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -70,6 +79,11 @@ matrix G(1,3);
 matrix Q(1,1);
 matrix y(1,1);
 matrix u(1,1);
+
+matrix gainK,errorY,U,Y,I33;
+matrix P,P_old,P_new;
+matrix predictX,predictX_old,predictX_new;
+matrix resultX,resultY;
 /* USER CODE END 0 */
 
 /**
@@ -103,6 +117,7 @@ int main(void)
 	R.read(data_R);
 	u.read(data_u);
 	y.read(data_y);
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -134,6 +149,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  doKalman_gain();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -353,7 +369,58 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void doKalman_gain(){
+	matrix c_tra= C.transpose();
+	matrix buf=(P_old*c_tra)*C;
+}
+/*
+void run(matrix u_in, matrix y_in) {
+	U = u_in;
+	Y = y_in;
+	doKalman_gain();
+	doPredict_y();
+	doCorrect_p();
+	doCorrect();
+	// Correct
+	doPredict_x();
+	doPredict_p();
+	doResult();
+	// Predict
+	predictX_old = predictX_new;
+	P_old = P_new;
+	//update
+}
 
+void doKalman_gain(){
+	matrix buf=((C*P_old*C.transpose())+R);
+	gainK = (P_old*C.transpose())*buf.inv();
+}
+
+void doPredict_y(){
+	errorY = Y-((C*predictX_old)+(D*U));
+}
+
+void doCorrect_p(){
+	P_old = (I33-(gainK*C))*P_old;
+}
+
+void doCorrect(){
+	predictX = (gainK*errorY)+predictX_old;
+}
+
+void doPredict_x(){
+	predictX_new = (A*predictX)+(B*U);
+}
+
+void doPredict_p(){
+	P_new = ((A*P)*A.transpose())+((G*Q)*G.transpose());
+}
+
+void doResult(){
+	resultY = (C*predictX)+(D*U);
+	resultX = predictX;
+}
+*/
 /* USER CODE END 4 */
 
 /**
