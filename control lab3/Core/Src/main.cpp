@@ -61,6 +61,8 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint64_t _micros = 0;
+
 matrix A(3,3);
 matrix B(3,3);
 matrix C(3,1);
@@ -75,6 +77,15 @@ matrix gainK,errorY,U,Y,I33;
 matrix P,P_old,P_new;
 matrix predictX,predictX_old,predictX_new;
 matrix resultX,resultY;
+
+kalman_filter filter;
+
+float DegRel[1];
+float pos;
+
+uint64_t micros();
+float pos_stack;
+float read_pos();
 /* USER CODE END 0 */
 
 /**
@@ -109,7 +120,7 @@ int main(void)
 	u.read(data_u);
 	y.read(data_y);
 
-	kalman_filter filter;
+
 	filter.setAtoD(A, B, C, D);
 	filter.setQGR(Q, G, R);
   /* USER CODE END 1 */
@@ -136,14 +147,21 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_TIM_Base_Start_IT(&htim2);
+	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
+	  HAL_Delay(1);
+	float RawRead = read_pos();
+	DegRel[0] = (RawRead/3072.0)*360.0;
+	y.read(DegRel);
 	  filter.run(u, y);
+	  pos = filter.resultX.data[0][0];
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -216,7 +234,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 767;
+  htim1.Init.Period = 3071;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -363,7 +381,24 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim == &htim2)
+	{
+		_micros += 4294967295;
+	}
+	if (htim == &htim1)
+	{
+		pos_stack += 3071;
+	}
+}
+float read_pos(){
+	return pos_stack + htim1.Instance->CNT;
+}
+uint64_t micros()
+{
+	return _micros + htim2.Instance->CNT;
+}
 /* USER CODE END 4 */
 
 /**
