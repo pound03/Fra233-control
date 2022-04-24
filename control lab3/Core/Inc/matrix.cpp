@@ -12,7 +12,7 @@ matrix::matrix() {
 	d_y = 1;
 	for (int i = 0; i < 1; i++) {
 		for (int j = 0; j < 1; ++j) {
-			data[i][j] = 0.0;
+			data[i][j] = 0;
 		}
 	};
 }
@@ -39,12 +39,12 @@ matrix::matrix(int x, int y, float *data_in) {
 
 matrix matrix::operator+(matrix &in) {
 	matrix result;
-	result.setx(d_y);
-	result.sety(d_x);
+	result.setx(d_x);
+	result.sety(d_y);
 
 	for (int y = 0; y < d_y; y++) {
 		for (int x = 0; x < d_x; x++) {
-			int total = 0;
+			float total = 0;
 			total = data[x][y] + in.data[x][y];
 
 			result.data[x][y] = total;
@@ -56,12 +56,12 @@ matrix matrix::operator+(matrix &in) {
 
 matrix matrix::operator-(matrix &in) {
 	matrix result;
-	result.setx(d_y);
-	result.sety(d_x);
+	result.setx(d_x);
+	result.sety(d_y);
 
 	for (int y = 0; y < d_y; y++) {
 		for (int x = 0; x < d_x; x++) {
-			int total = 0;
+			float total = 0;
 			total = data[x][y] - in.data[x][y];
 
 			result.data[x][y] = total;
@@ -77,7 +77,7 @@ matrix matrix::operator*(matrix &in) {
 	result.sety(in.d_y);
 	for (int m = 0; m < d_x; m++) {
 		for (int n = 0; n < in.d_y; n++) {
-			int total = 0;
+			float total = 0;
 			for (int k = 0; k < d_y; k++) {
 				total = total + data[m][k] * in.data[k][n];
 			}
@@ -115,9 +115,9 @@ matrix matrix::transpose() {
 	matrix result;
 	result.setx(d_y);
 	result.sety(d_x);
-	for (int i = 0; i < d_x; i++) {
-		for (int j = 0; j < d_y; ++j) {
-			result.data[j][i] = data[i][j];
+	for (int m = 0; m < d_x; m++) {
+		for (int n = 0; n < d_y; ++n) {
+			result.data[n][m] = data[m][n];
 		}
 	}
 	return result;

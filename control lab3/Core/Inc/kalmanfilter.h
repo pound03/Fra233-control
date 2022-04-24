@@ -5,8 +5,8 @@
  *      Author: weera
  */
 
-#ifndef INC_KALMANFILTER_H_
-#define INC_KALMANFILTER_H_
+#ifndef KALMANFILTER_H_
+#define KALMANFILTER_H_
 
 #include "matrix.h"
 
@@ -17,7 +17,6 @@ public:
 	matrix P,P_old,P_new;
 	matrix predictX,predictX_old,predictX_new;
 	matrix resultX,resultY;
-
 
 	kalman_filter();
 	void doKalman_gain();
