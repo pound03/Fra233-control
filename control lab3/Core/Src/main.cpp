@@ -99,10 +99,13 @@ float angle=0;
 float angle_old=-1;
 float angle_oppset=0;
 float angle_total=0;
-float treshold=0.5*(2*3.141592);
+float treshold=0.1*(2*3.141592);
 float delta=0;
 
-float test=0;
+float test[3];
+float speed;
+float acc;
+
 /* USER CODE END 0 */
 
 /**
@@ -112,13 +115,14 @@ float test=0;
 int main(void) {
 	/* USER CODE BEGIN 1 */
 	float dt = 0.001;
+//	dt=1;
 	float data_A[9] = { 1, dt, dt * dt / 2, 0, 1, dt, 0, 0, 1 };
 	float data_B[3] = { 0, 0, 0 };
 	float data_C[3] = { 1, 0, 0 };
-	float data_R[1] = { 1 };
+	float data_R[1] = { 0.1 };
 	float buf_g = (dt * dt) / 2;
 	float data_G[3] = { buf_g, dt, 1.0 };
-	float data_Q[1] = { 1 };
+	float data_Q[1] = { 0.000001 };
 	float data_D[1] = { 0 };
 
 	float data_y[1] = { 0.001 };
@@ -175,15 +179,21 @@ int main(void) {
 //			DegRel[0] = i;
 //			y.read(DegRel);
 //			filter.run(u, y);
+//			pos = filter.resultX.data[0][0];
+//			speed = filter.resultX.data[1][0];
+//			acc = filter.resultX.data[2][0];
 //		}
-
+		DegRel[0] = read_pos();
 		if(micros()-timeStamp>=dt)
 		{
 			timeStamp = micros();
-			DegRel[0] = read_pos();
+
 			y.read(DegRel);
 			filter.run(u, y);
 			pos = filter.resultX.data[0][0];
+			speed = filter.resultX.data[1][0]*5;
+			acc = filter.resultX.data[2][0];
+
 		}
 		/*
 		 HAL_Delay(1);
@@ -454,15 +464,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	}
 }
 float read_pos() {
-	  angle=(float)htim3.Instance->CNT;
-	  angle=  angle/(3072.0);
-	  angle = angle*(2.0*3.141592);
-	  test = angle*100;
+
+	  angle =  ((float)htim3.Instance->CNT)/(1536.0)*(2.0*3.141592);
+
 	  if(angle_old != -1){
 		  if(angle-angle_old <= -treshold){
-			  angle_oppset=angle_oppset+(2*3.141592);
+			  angle_oppset=angle_oppset+(4*3.141592);
 		  }else if (angle-angle_old >= treshold) {
-			  angle_oppset=angle_oppset-(2*3.141592);
+			  angle_oppset=angle_oppset-(4*3.141592);
 		  }
 
 	  }
