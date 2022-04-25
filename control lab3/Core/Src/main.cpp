@@ -23,6 +23,8 @@
 /* USER CODE BEGIN Includes */
 #include "matrix.h"
 #include "kalmanfilter.h"
+#define _USE_MATH_DEFINES
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +49,7 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+static uint64_t timeStamp;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,6 +93,16 @@ float pos;
 uint64_t micros();
 float pos_stack;
 float read_pos();
+
+float data_read=0;
+float angle=0;
+float angle_old=-1;
+float angle_oppset=0;
+float angle_total=0;
+float treshold=0.5*(2*3.141592);
+float delta=0;
+
+float test=0;
 /* USER CODE END 0 */
 
 /**
@@ -99,7 +111,7 @@ float read_pos();
  */
 int main(void) {
 	/* USER CODE BEGIN 1 */
-	float dt = 1;
+	float dt = 0.001;
 	float data_A[9] = { 1, dt, dt * dt / 2, 0, 1, dt, 0, 0, 1 };
 	float data_B[3] = { 0, 0, 0 };
 	float data_C[3] = { 1, 0, 0 };
@@ -125,6 +137,8 @@ int main(void) {
 
 	filter.setAtoD(A, B, C, D);
 	filter.setQGR(Q, G, R);
+
+	timeStamp = 0;
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -150,18 +164,27 @@ int main(void) {
 	MX_TIM2_Init();
 	MX_TIM3_Init();
 	/* USER CODE BEGIN 2 */
-
+	HAL_TIM_Encoder_Start_IT(&htim3, TIM_CHANNEL_ALL);
+	HAL_TIM_Base_Start_IT(&htim2);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		for (int i = 0; i < 10; ++i) {
-			DegRel[0] = i;
+//		for (int i = 0; i < 10; ++i) {
+//			DegRel[0] = i;
+//			y.read(DegRel);
+//			filter.run(u, y);
+//		}
+
+		if(micros()-timeStamp>=dt)
+		{
+			timeStamp = micros();
+			DegRel[0] = read_pos();
 			y.read(DegRel);
 			filter.run(u, y);
+			pos = filter.resultX.data[0][0];
 		}
-
 		/*
 		 HAL_Delay(1);
 		 float RawRead = read_pos();
@@ -429,12 +452,25 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim == &htim2) {
 		_micros += 4294967295;
 	}
-	if (htim == &htim3) {
-		pos_stack += 3071;
-	}
 }
 float read_pos() {
-	return pos_stack + htim1.Instance->CNT;
+	  angle=(float)htim3.Instance->CNT;
+	  angle=  angle/(3072.0);
+	  angle = angle*(2.0*3.141592);
+	  test = angle*100;
+	  if(angle_old != -1){
+		  if(angle-angle_old <= -treshold){
+			  angle_oppset=angle_oppset+(2*3.141592);
+		  }else if (angle-angle_old >= treshold) {
+			  angle_oppset=angle_oppset-(2*3.141592);
+		  }
+
+	  }
+
+	  angle_total=angle+angle_oppset;
+	  delta=angle-angle_old;
+	  angle_old=angle;
+	return angle_total;
 }
 uint64_t micros() {
 	return _micros + htim2.Instance->CNT;
